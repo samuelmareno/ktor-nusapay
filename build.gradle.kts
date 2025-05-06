@@ -9,13 +9,13 @@ plugins {
 }
 
 group = "payment2go.co.id"
-version = "0.0.1"
+version = "0.0.2"
 
 application {
     mainClass = "io.ktor.server.netty.EngineMain"
 
     val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
 repositories {
@@ -43,4 +43,25 @@ ktor {
     fatJar {
         archiveFileName.set("fat.jar")
     }
+}
+
+tasks.register("generateVersionFile") {
+    val outputDir = file("src/main/kotlin/generated")
+    outputs.dir(outputDir)
+    doLast {
+        outputDir.mkdirs()
+        val versionFile = file("$outputDir/Version.kt")
+        versionFile.writeText("""
+            object Version {
+                const val APP_VERSION = "${project.version}"
+            }
+        """.trimIndent())
+    }
+}
+
+sourceSets["main"].java.srcDir("src/main/kotlin/generated")
+
+// Pastikan task generateVersionFile dijalankan sebelum compileKotlin
+tasks.named("compileKotlin") {
+    dependsOn("generateVersionFile")
 }
