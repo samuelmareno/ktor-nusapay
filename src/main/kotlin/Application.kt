@@ -10,6 +10,7 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.Json
 import payment2go.co.id.feature_auth.routes.configureAuthRouting
 
@@ -22,6 +23,9 @@ fun Application.module() {
     routing {
         get("/version") {
             //get version of app from gradle
+            println("starting version")
+            delay(5000L)
+            println("finished version")
             call.respond(HttpStatusCode.OK, Version.APP_VERSION)
         }
     }
