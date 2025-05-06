@@ -3,7 +3,7 @@ FROM gradle:latest AS cache
 WORKDIR /home/gradle/app
 
 # Copy file konfigurasi yang jarang berubah dulu
-COPY build.gradle settings.gradle.kts gradle.properties ./
+# COPY build.gradle settings.gradle.kts gradle.properties ./#
 COPY gradle ./gradle
 
 # Download dependencies dan cache
