@@ -29,5 +29,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/yourapp:1.0.0
+          tags: ${{ secrets.DOCKER_USERNAME }}/ktor-nusapay:latest
           platforms: linux/amd64,linux/arm64
